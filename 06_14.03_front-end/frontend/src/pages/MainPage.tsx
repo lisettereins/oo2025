@@ -3,6 +3,9 @@ import { Category } from '../models/Category'; // ../ ---> kausta võrra ülespo
 import { Product } from '../models/Product';
 
 function MainPage() {
+  // Järgmine kord:
+  // Leheküljed ---> Pageable (Hibernate)
+  // Kategooria alusel filtreerimine (custom päring Repository's - Hibernate)
 
   // muutuja - HTML   muudab muutujat + HTMLi    sulgude sees - algväärtus
   const [kategooriad, setKategooriad] = useState<Category[]>([]);
