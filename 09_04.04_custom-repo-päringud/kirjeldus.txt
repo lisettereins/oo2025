@@ -1,1 +1,1 @@
-Tunnis ette võetud teemal viimistletud omapoolne rakendus.
+Custom repository päringud. Filtreerimine, sorteerimine, pagineerimine.
