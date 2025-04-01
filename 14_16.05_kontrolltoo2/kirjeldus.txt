@@ -1,1 +1,8 @@
-Märkmed seminari teemadel
+Kolmepunktilise kontrolltöö punktide lahendused.
+
+Teise kontrolltöö tulemus on eksamihinde aluseks:
+1 punkt - C
+2 punkti - B
+3 punkti - A
+
+Muude kursusel esitavate tööde abil saab hinnet mõlemas suunas mõjutada. 
