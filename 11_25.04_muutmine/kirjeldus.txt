@@ -1,1 +1,1 @@
-Tunnis ette võetud teemal viimistletud rakendus.
+Võimaldada front-endis sportlast/tulemust muuta.
