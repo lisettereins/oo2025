@@ -1,1 +1,1 @@
-Kümnevõistluse front-endile tabelid, navigeerimine võistlejate ja tulemuste juurest. Tee ka Boostrapia menüü.
+Kümnevõistluse front-endile tabelid, navigeerimine võistlejate ja tulemuste juurest. Tee ka Boostrapiga menüü.
