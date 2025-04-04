@@ -34,3 +34,6 @@ public class CategoryController {
         return categoryRepository.findAll();
     }
 }
+
+// File --> Settings --> Build,Execution,Deployment -> Compiler --> Annotation Processer -->
+// --> Default pealt: Projekti nimi (veebipood --> Processor Path pealt Obtain processeros...

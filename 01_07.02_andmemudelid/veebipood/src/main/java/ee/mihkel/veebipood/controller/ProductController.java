@@ -3,8 +3,11 @@ package ee.mihkel.veebipood.controller;
 import ee.mihkel.veebipood.entity.Product;
 import ee.mihkel.veebipood.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -93,6 +96,36 @@ public class ProductController {
 //        }
         productRepository.save(product);
         return productRepository.findAll();
+    }
+
+    // const filteredProducts = [];
+
+//    @GetMapping("/category-products")
+//    public List<Product> getCategoryProducts(@RequestParam Long categoryId) {
+//        List<Product> products = productRepository.findAll();
+//        List<Product> filteredProducts = new ArrayList<>(); // tühi List
+////        for (int i = 0; i < products.size(); i++) {
+////             if (products.get(i).getCategory().getId().equals(categoryId)) {
+////                  filteredProducts.add(products.get(i));
+////              }
+////        }
+//        for (Product p: products) {
+//            // ==   --> kontrollib, kas vasak pool ja parem pool on identsed
+//            // .equals --> kontrollib, kas vasaku ja parema poole väärtused on identsed
+//            if (p.getCategory().getId().equals(categoryId)) {
+//                filteredProducts.add(p);
+//            }
+//        }
+//        return filteredProducts;
+//    }
+
+    // localhost:8080/category-products?categoryId=1&page=0&size=2
+    @GetMapping("/category-products")
+    public Page<Product> getCategoryProducts(@RequestParam Long categoryId, Pageable pageable) {
+        if (categoryId == -1) {
+            return productRepository.findAll(pageable); // returniga funktsioon lõppeb, else blokki pole vaja
+        }
+        return productRepository.findByCategory_Id(categoryId, pageable);
     }
 }
 
