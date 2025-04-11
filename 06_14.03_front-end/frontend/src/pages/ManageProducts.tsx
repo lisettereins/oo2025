@@ -1,14 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Product } from "../models/Product"; // mul on ainsuses
+import { Category } from "../models/Category";
+import { ToastContainer, toast } from 'react-toastify';
  
 function ManageProducts() {
  
   const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
  
   useEffect(() => {
     fetch("http://localhost:8080/products")
         .then(res=>res.json())
         .then(json=> setProducts(json))
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/categories")
+        .then(res=>res.json())
+        .then(json=> setCategories(json))
   }, []);
 
   const deleteProduct = (id: number) => {
@@ -26,7 +35,7 @@ function ManageProducts() {
   const priceRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const activeRef = useRef<HTMLInputElement>(null);
-  const categoryRef = useRef<HTMLInputElement>(null);
+  const categoryRef = useRef<HTMLSelectElement>(null);
 
   const addProduct = () => {
     const newProduct = {
@@ -44,7 +53,15 @@ function ManageProducts() {
         "Content-Type": "application/json"
       }
     }).then(res=>res.json())
-      .then(json=> setProducts(json))
+      .then(json=> {
+        if (json.message === undefined && json.timestamp === undefined 
+                        && json.status === undefined) {
+          setProducts(json);
+          toast.success("Uus toode lisatud!");
+        } else {
+          toast.error(json.message);
+        }
+      })
   }
  
   return (
@@ -60,7 +77,11 @@ function ManageProducts() {
       <label>Active</label> <br />
       <input ref={activeRef} type="checkbox" /> <br />
       <label>Category</label> <br />
-      <input ref={categoryRef} type="number" /> <br />
+      {/* <input ref={categoryRef} type="number" /> <br /> */}
+      <select ref={categoryRef}>
+        {categories.map(category => <option value={category.id}>{category.name}</option>)}
+      </select>
+      <br />
       <button onClick={() => addProduct()}>Add product</button>
 
       <table>
@@ -90,6 +111,7 @@ function ManageProducts() {
           ))}
         </tbody>
       </table>
+      <ToastContainer />
     </div>
   );
 }

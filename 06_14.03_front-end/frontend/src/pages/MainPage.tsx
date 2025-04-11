@@ -18,6 +18,7 @@ function MainPage() {
   const [kategooriad, setKategooriad] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [totalProducts, setTotalProducts] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const [productsByPage, setProductsByPage] = useState(1);
   const [page, setPage] = useState(0);
   const [activeCategory, setActiveCategory] = useState(-1);
@@ -44,6 +45,7 @@ function MainPage() {
         .then(json=> {
           setProducts(json.content);
           setTotalProducts(json.totalElements);
+          setTotalPages(json.totalPages);
         }) // mida set'n see muutub HTML-s
   }, [productsByPage])
 
@@ -89,7 +91,8 @@ function MainPage() {
       </div> )}
       <button disabled={page === 0} onClick={() => updatePage(page - 1)}>Eelmine</button>
       <span>{page + 1}</span>
-      <button disabled={page === Math.ceil(totalProducts/productsByPage-1)} onClick={() => updatePage(page + 1)}>Järgmine</button>
+      <button disabled={page >= totalPages - 1} 
+        onClick={() => updatePage(page + 1)}>Järgmine</button>    
     </div>
   )
 }
