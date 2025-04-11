@@ -1,6 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Category } from '../models/Category'; // ../ ---> kausta võrra ülespoole
 import { Product } from '../models/Product';
+
+// React Hook (Reacti erikood)
+// 1. peab importima
+// 2. peab algama use eesliidesega
+// 3. peab olema funktsionaalne - tõmban ta käima nii, et panen sulud lõppu
+// 4. ei tohi olla tingimuslikult loodud (if sees)
+// 5. ei tohi olla funktsioonide sees loodud
 
 function MainPage() {
   // Järgmine kord:
@@ -11,8 +18,10 @@ function MainPage() {
   const [kategooriad, setKategooriad] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [totalProducts, setTotalProducts] = useState(0);
-  const productsByPage = 1;
+  const [productsByPage, setProductsByPage] = useState(1);
   const [page, setPage] = useState(0);
+  const [activeCategory, setActiveCategory] = useState(-1);
+
   // let page = 0; kui muudaks hiljem koodis: page = 1  , siis ei läheks HTMLi uuendama
   // uef -> onload
   useEffect(() => {
@@ -21,17 +30,10 @@ function MainPage() {
         .then(json=> setKategooriad(json)) // body: sisu mida tagastab meile back-end
   }, []);
 
-  useEffect(() => {
-    showByCategory(-1, 0);
-  }, []);
-
-  const [activeCategory, setActiveCategory] = useState(-1);
-
-
   // default = page on 0
   // default = size on 20
 
-  function showByCategory(categoryId: number, currentPage: number) {
+  const showByCategory = useCallback((categoryId: number, currentPage: number) => {
     setActiveCategory(categoryId);
     setPage(currentPage);
     fetch("http://localhost:8080/category-products?categoryId=" + categoryId + 
@@ -43,7 +45,11 @@ function MainPage() {
           setProducts(json.content);
           setTotalProducts(json.totalElements);
         }) // mida set'n see muutub HTML-s
-  }
+  }, [productsByPage])
+
+  useEffect(() => {
+    showByCategory(-1, 0);
+  }, [showByCategory]);
 
   // const showByCategory = () => {}
 
@@ -51,8 +57,19 @@ function MainPage() {
     showByCategory(activeCategory, newPage);
   }
 
+  const productsByPageRef = useRef<HTMLSelectElement>(null); // HTMLi inputiga/selectiga sidumiseks
+                                          // .current? ---> küsimärk tähendab, et TypeScript näeb, et Ref on alguses null ehk tühi
+                                          //              see tähendab, et tal on 2 väärtuse võimalust
+                                          // .current.value ---> selle selecti väärtus, mis väljastab alati Stringi
+                                          // Number() ---> konverdime selle .current.value väärtuse numbriks tagasi
   return (
     <div>
+      <select ref={productsByPageRef} 
+              onChange={() => setProductsByPage(Number(productsByPageRef.current?.value))}>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
       <button onClick={() => showByCategory(-1, 0)}>Kõik kategooriad</button>
       {kategooriad.map(kategooria => 
       <button key={kategooria.id} onClick={() => showByCategory(kategooria.id, 0)}>
