@@ -1,1 +1,3 @@
-Custom repository päringud. Filtreerimine, sorteerimine, pagineerimine.
+Custom repository päringud. 
+
+Kümnevõistluses: Sportlase Filtreerimine riigi järgi. Pagineerimine ehk võimalus vaadata lehekülgede kaupa.
