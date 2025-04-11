@@ -1,1 +1,0 @@
-Võimaldada front-endis sportlast/tulemust muuta.

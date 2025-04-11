@@ -1,1 +1,3 @@
 Üksiku tulemuse/sportlase detailsemalt vaatamine.
+
+Võimaldada front-endis sportlast/tulemust muuta.

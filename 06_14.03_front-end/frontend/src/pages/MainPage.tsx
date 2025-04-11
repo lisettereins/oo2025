@@ -98,3 +98,10 @@ function MainPage() {
 }
 
 export default MainPage
+
+
+// useEffect(() => {
+//   fetch("http://localhost:8080/products") // API otspunkt kuhu läheb päring
+//   .then(res=>res.json()) // kogu tagastus: headers, status code
+//   .then((json: Product[])=> setCountries([... new Set(json.map((p: Product) => p.name))])) // body: sisu mida tagastab meile back-end
+// }, []);
