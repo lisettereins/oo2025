@@ -6,3 +6,4 @@ Kodutööde ja kontrolltööde tabel: https://docs.google.com/spreadsheets/d/1J0
 
 https://meet.google.com/wmk-hpds-yna
 
+https://oop-kt.web.app/?kt1605
